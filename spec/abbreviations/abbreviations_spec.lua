@@ -20,6 +20,14 @@ describe('unicode abbreviation expansion', function()
     end)
   )
 
+  it(
+    'autoexpands abbreviations',
+    helpers.clean_buffer(function()
+      helpers.insert [[\a]]
+      assert.contents.are [[α]]
+    end, nil, 'txt')
+  )
+
   describe('explicit triggers', function()
     it(
       'inserts a space on <Space>',

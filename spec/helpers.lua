@@ -129,7 +129,7 @@ end
 --  Waits for the LSP to be ready before proceeding with a given callback.
 --
 --  Yes c(lean) may be a double entendre, and no I don't feel bad.
-function helpers.clean_buffer(contents, callback)
+function helpers.clean_buffer(contents, callback, ext)
   local lines
 
   -- Support a 1-arg version where we assume the contents is an empty buffer.
@@ -142,7 +142,7 @@ function helpers.clean_buffer(contents, callback)
 
   return function()
     local bufnr = vim.api.nvim_create_buf(false, false)
-    set_unique_name_so_we_always_have_a_separate_fake_file(bufnr, 'lean')
+    set_unique_name_so_we_always_have_a_separate_fake_file(bufnr, ext or 'lean')
     -- apparently necessary to trigger BufWinEnter
     vim.api.nvim_set_current_buf(bufnr)
     vim.bo.bufhidden = 'hide'
