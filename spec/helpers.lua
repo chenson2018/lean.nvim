@@ -117,10 +117,10 @@ end
 
 -- Even though we can delete a buffer, so should be able to reuse names,
 -- we do this to ensure if a test fails, future ones still get new "files".
-local function set_unique_name_so_we_always_have_a_separate_fake_file(bufnr)
+local function set_unique_name_so_we_always_have_a_separate_fake_file(bufnr, ext)
   local counter = helpers._clean_buffer_counter
   helpers._clean_buffer_counter = helpers._clean_buffer_counter + 1
-  local unique_name = string.format('%s/unittest-%d.lean', fixtures.project.path, counter)
+  local unique_name = string.format('%s/unittest-%d.%s', fixtures.project.path, counter, ext)
   vim.api.nvim_buf_set_name(bufnr, unique_name)
 end
 
@@ -142,7 +142,7 @@ function helpers.clean_buffer(contents, callback)
 
   return function()
     local bufnr = vim.api.nvim_create_buf(false, false)
-    set_unique_name_so_we_always_have_a_separate_fake_file(bufnr)
+    set_unique_name_so_we_always_have_a_separate_fake_file(bufnr, 'lean')
     -- apparently necessary to trigger BufWinEnter
     vim.api.nvim_set_current_buf(bufnr)
     vim.bo.bufhidden = 'hide'
