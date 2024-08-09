@@ -10,6 +10,7 @@ local function wait_for_expansion()
 end
 
 require('lean').setup {}
+require('lean.abbreviations').enable('*.txt', {})
 
 describe('unicode abbreviation expansion', function()
   it(
